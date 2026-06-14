@@ -33,9 +33,21 @@ export default function App() {
   const [lang, setLang] = useState<Language>('TR'); // TR by default as requested, with EN swap
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
-  const [isLight, setIsLight] = useState(true);
+  const [isLight, setIsLight] = useState<boolean>(() => {
+    try {
+      const stored = localStorage.getItem('obyo_theme_light');
+      if (stored !== null) {
+        return stored === 'true';
+      }
+    } catch(e) {}
+    return true; // Default behavior
+  });
 
   useEffect(() => {
+    try {
+      localStorage.setItem('obyo_theme_light', String(isLight));
+    } catch(e) {}
+    
     if (isLight) {
       document.documentElement.classList.add('light');
     } else {
