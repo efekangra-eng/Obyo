@@ -1,0 +1,6 @@
+{
+  "name": "Obyo Trade",
+  "description": "Premium, modern and responsive coming-soon landing page for Obyo Trade binary options trading platform. Features custom animations, interactive trader simulator, count-down timer, multi-language support (TR/EN), and high-fidelity custom brand designs.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
