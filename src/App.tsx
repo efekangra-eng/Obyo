@@ -104,6 +104,15 @@ export default function App() {
     }
   };
 
+  const handleNavClick = (id: string) => {
+    if (currentView !== 'home') {
+      setCurrentView('home');
+      setTimeout(() => scrollToSection(id), 100);
+    } else {
+      scrollToSection(id);
+    }
+  };
+
   return (
     <div id="obyo-app-root" className="min-h-screen bg-background-black text-gray-100 font-sans relative overflow-x-hidden selection:bg-primary selection:text-black">
       
@@ -155,21 +164,21 @@ export default function App() {
           <nav className="hidden md:flex items-center gap-6 text-xs font-semibold tracking-wide uppercase text-neutral-400">
             <button 
               id="nav-link-demo"
-              onClick={() => scrollToSection('platform-preview')} 
+              onClick={() => handleNavClick('platform-preview')} 
               className="hover:text-primary transition-colors cursor-pointer"
             >
               {t.nav.interactiveDemo}
             </button>
             <button 
               id="nav-link-features"
-              onClick={() => scrollToSection('features-section')} 
+              onClick={() => handleNavClick('features-section')} 
               className="hover:text-primary transition-colors cursor-pointer"
             >
               {lang === 'TR' ? 'Yetenekler' : 'Features'}
             </button>
             <button 
               id="nav-link-faq"
-              onClick={() => scrollToSection('faq-section')} 
+              onClick={() => handleNavClick('faq-section')} 
               className="hover:text-primary transition-colors cursor-pointer"
             >
               {t.faq.sectionTitle}
@@ -184,7 +193,7 @@ export default function App() {
             {/* Primary Sign up Button */}
             <button
               id="header-cta-btn"
-              onClick={() => scrollToSection('registration-form')}
+              onClick={() => handleNavClick('registration-form')}
               className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/10 text-white font-display font-medium text-xs rounded-full shadow-md transition-colors active:scale-95 cursor-pointer"
             >
               <span>{t.nav.register}</span>
@@ -198,21 +207,21 @@ export default function App() {
       {/* BOTTOM FLOATING ACTION BAR */}
       <div className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-[50] transition-all duration-500 rounded-full border ${scrolled ? 'bg-neutral-900/80 backdrop-blur-xl border-white/10 shadow-2xl' : 'bg-neutral-900/40 backdrop-blur-md border-white/5'} p-1.5 flex items-center gap-2 shadow-lg`}>
         <button 
-          onClick={() => { setCurrentView('home'); scrollToSection('platform-preview'); }} 
+          onClick={() => handleNavClick('platform-preview')} 
           className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSection === 'platform-preview' && currentView === 'home' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
           title={lang === 'TR' ? 'Önizleme' : 'Preview'}
         >
           <LayoutDashboard className="w-5 h-5" />
         </button>
         <button 
-          onClick={() => { setCurrentView('home'); scrollToSection('features-section'); }} 
+          onClick={() => handleNavClick('features-section')} 
           className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSection === 'features-section' && currentView === 'home' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
           title={lang === 'TR' ? 'Yetenekler' : 'Features'}
         >
           <Sparkles className="w-5 h-5" />
         </button>
         <button
-          onClick={() => { setCurrentView('home'); scrollToSection('registration-form'); }}
+          onClick={() => handleNavClick('registration-form')}
           className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSection === 'registration-form' && currentView === 'home' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
           title={t.nav.register}
         >
@@ -278,14 +287,14 @@ export default function App() {
           >
             <button
               id="hero-primary-cta"
-              onClick={() => scrollToSection('registration-form')}
+              onClick={() => handleNavClick('registration-form')}
               className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-neutral-200 text-black font-display font-medium text-sm rounded-xl transition-all duration-300 shadow-lg active:scale-98 cursor-pointer"
             >
               {t.hero.primaryCta}
             </button>
             <button
               id="hero-secondary-cta"
-              onClick={() => scrollToSection('platform-preview')}
+              onClick={() => handleNavClick('platform-preview')}
               className="w-full sm:w-auto px-8 py-4 bg-neutral-900/40 backdrop-blur-lg border border-white/10 hover:border-white/30 text-white font-display font-medium text-sm rounded-xl transition-all duration-300 hover:bg-neutral-800 shadow-md active:scale-98 cursor-pointer"
             >
               {t.hero.secondaryCta}
