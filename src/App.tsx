@@ -13,6 +13,7 @@ import { AppDownload } from './components/AppDownload';
 import { FeaturesGrid } from './components/FeaturesGrid';
 import { RegistrationForm } from './components/RegistrationForm';
 import { FAQSection } from './components/FAQSection';
+import TradeGuide from './components/TradeGuide';
 
 import { 
   ArrowRight, 
@@ -26,7 +27,8 @@ import {
   Sparkles,
   UserPlus,
   Sun,
-  Moon
+  Moon,
+  BookOpen
 } from 'lucide-react';
 
 export default function App() {
@@ -42,6 +44,17 @@ export default function App() {
     } catch(e) {}
     return true; // Default behavior
   });
+
+  const [isPwa, setIsPwa] = useState(false);
+  const [currentView, setCurrentView] = useState<'home' | 'guide'>('home');
+
+  useEffect(() => {
+    const handler = (e: MediaQueryListEvent) => setIsPwa(e.matches);
+    const mediaQuery = window.matchMedia('(display-mode: standalone)');
+    setIsPwa(mediaQuery.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
 
   useEffect(() => {
     try {
@@ -185,26 +198,37 @@ export default function App() {
       {/* BOTTOM FLOATING ACTION BAR */}
       <div className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-[50] transition-all duration-500 rounded-full border ${scrolled ? 'bg-neutral-900/80 backdrop-blur-xl border-white/10 shadow-2xl' : 'bg-neutral-900/40 backdrop-blur-md border-white/5'} p-1.5 flex items-center gap-2 shadow-lg`}>
         <button 
-          onClick={() => scrollToSection('platform-preview')} 
-          className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSection === 'platform-preview' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
+          onClick={() => { setCurrentView('home'); scrollToSection('platform-preview'); }} 
+          className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSection === 'platform-preview' && currentView === 'home' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
           title={lang === 'TR' ? 'Önizleme' : 'Preview'}
         >
           <LayoutDashboard className="w-5 h-5" />
         </button>
         <button 
-          onClick={() => scrollToSection('features-section')} 
-          className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSection === 'features-section' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
+          onClick={() => { setCurrentView('home'); scrollToSection('features-section'); }} 
+          className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSection === 'features-section' && currentView === 'home' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
           title={lang === 'TR' ? 'Yetenekler' : 'Features'}
         >
           <Sparkles className="w-5 h-5" />
         </button>
         <button
-          onClick={() => scrollToSection('registration-form')}
-          className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSection === 'registration-form' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
+          onClick={() => { setCurrentView('home'); scrollToSection('registration-form'); }}
+          className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSection === 'registration-form' && currentView === 'home' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
           title={t.nav.register}
         >
           <UserPlus className="w-5 h-5" />
         </button>
+        
+        {isPwa && (
+          <button
+            onClick={() => setCurrentView('guide')}
+            className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${currentView === 'guide' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
+            title={lang === 'TR' ? 'Rehber' : 'Guide'}
+          >
+            <BookOpen className="w-5 h-5" />
+          </button>
+        )}
+
         <div className="w-[1px] h-6 bg-white/10 mx-1" />
         <button
           onClick={() => setIsLight(!isLight)}
@@ -216,7 +240,9 @@ export default function App() {
       </div>
 
       {/* 3. HERO & COUNTDOWN LANDING SPLASH */}
-      <main className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 pt-32 md:pt-40 pb-20 flex flex-col items-center">
+      {currentView === 'home' ? (
+        <>
+          <main className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 pt-32 md:pt-40 pb-20 flex flex-col items-center">
         
         {/* Mega Page Headline Title */}
         <div className="text-center max-w-4xl select-none">
@@ -368,6 +394,10 @@ export default function App() {
 
         </div>
       </footer>
+      </>
+      ) : (
+        <TradeGuide lang={lang} onAddClose={() => setCurrentView('home')} />
+      )}
 
     </div>
   );

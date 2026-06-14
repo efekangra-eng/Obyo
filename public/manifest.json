@@ -1,0 +1,21 @@
+{
+  "name": "Obyo Trade",
+  "short_name": "ObyoTrade",
+  "description": "Profesyonel ikili opsiyon ticaret platformu. Çok Yakında.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0c",
+  "theme_color": "#FF6B00",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
