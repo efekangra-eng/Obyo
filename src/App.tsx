@@ -95,7 +95,7 @@ export default function App() {
       </div>
 
       {/* 2. FLOATING OVAL NAVIGATION BAR */}
-      <div className={`fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-[100] transition-all duration-500 w-[95%] max-w-5xl rounded-full ${scrolled ? 'glass-panel py-3 px-6' : 'glass-card border-transparent py-4 px-6'}`}>
+      <div className={`fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-[50] transition-all duration-500 w-[95%] max-w-5xl rounded-full border ${scrolled ? 'bg-neutral-900/60 backdrop-blur-xl border-white/10 shadow-2xl py-3 px-6' : 'bg-neutral-900/10 backdrop-blur-md border-white/5 py-4 px-6'}`}>
         <div className="flex items-center justify-between">
           
           {/* Brand Logo Anchor Left */}
@@ -171,7 +171,7 @@ export default function App() {
       </div>
 
       {/* BOTTOM FLOATING ACTION BAR */}
-      <div className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] transition-all duration-500 rounded-full ${scrolled ? 'glass-panel' : 'glass-card'} p-1.5 flex items-center gap-2`}>
+      <div className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-[50] transition-all duration-500 rounded-full border ${scrolled ? 'bg-neutral-900/80 backdrop-blur-xl border-white/10 shadow-2xl' : 'bg-neutral-900/40 backdrop-blur-md border-white/5'} p-1.5 flex items-center gap-2 shadow-lg`}>
         <button 
           onClick={() => scrollToSection('platform-preview')} 
           className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSection === 'platform-preview' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
