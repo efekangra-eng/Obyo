@@ -80,39 +80,41 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({ lang }) => {
       </motion.div>
 
       {/* Grid count display */}
-      <div id="countdown" className="grid grid-cols-4 gap-2 sm:gap-4 md:gap-6 w-full max-w-2xl px-2">
+      <div id="countdown" className="flex items-center justify-center gap-2 sm:gap-4 md:gap-8 w-full max-w-2xl px-2">
         {timeBlocks.map((block, idx) => (
-          <motion.div
-            key={block.id}
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: idx * 0.1 }}
-            className="relative overflow-hidden rounded-xl border border-neutral-800/80 bg-neutral-950/60 p-3 sm:p-5 flex flex-col items-center justify-center glow-orange/10 backdrop-blur-md"
-          >
-            {/* Top glass lighting accent */}
-            <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#FF6B00]/40 to-transparent" />
+          <React.Fragment key={block.id}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className="flex flex-col items-center justify-center min-w-[60px] sm:min-w-[80px]"
+            >
+              <div className="relative font-mono font-light text-4xl sm:text-6xl md:text-[5rem] text-white flex justify-center tracking-tighter leading-none mb-2">
+                <AnimatePresence mode="popLayout">
+                  <motion.span
+                    key={block.value}
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -20, opacity: 0 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                    className="text-white filter drop-shadow-lg"
+                  >
+                    {formatNum(block.value)}
+                  </motion.span>
+                </AnimatePresence>
+              </div>
 
-            <div className="relative font-mono font-black text-3xl sm:text-5xl md:text-6xl text-primary flex justify-center tracking-tight min-w-[50px] leading-tight">
-              {/* Animation on number change */}
-              <AnimatePresence mode="popLayout">
-                <motion.span
-                  key={block.value}
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -20, opacity: 0 }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                  className="bg-gradient-to-b from-[#FFAA00] to-[#FF4500] bg-clip-text text-transparent filter drop-shadow-[0_0_15px_rgba(255,107,0,0.15)] font-bold font-mono"
-                >
-                  {formatNum(block.value)}
-                </motion.span>
-              </AnimatePresence>
-            </div>
-
-            <span className="mt-2 text-[10px] sm:text-xs font-bold font-display tracking-widest text-neutral-400">
-              {block.label}
-            </span>
-          </motion.div>
+              <span className="mt-1 text-[9px] sm:text-[11px] font-semibold font-display tracking-[0.2em] text-neutral-500 uppercase">
+                {block.label}
+              </span>
+            </motion.div>
+            {idx < timeBlocks.length - 1 && (
+              <div className="text-3xl sm:text-5xl text-white/20 font-light pb-6 animate-pulse">
+                :
+              </div>
+            )}
+          </React.Fragment>
         ))}
       </div>
 

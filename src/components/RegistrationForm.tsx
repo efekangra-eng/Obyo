@@ -23,6 +23,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ lang }) => {
 
   // Error/validation states
   const [errorMsg, setErrorMsg] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   // Registration persistence state
   const [registeredUser, setRegisteredUser] = useState<UserSubscription | null>(null);
@@ -39,7 +40,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ lang }) => {
     }
   }, []);
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
 
@@ -56,6 +57,8 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ lang }) => {
       return;
     }
 
+    setIsSubmitting(true);
+
     // Double check if already registered in simulated queue
     const queueStartNum = 1424; // Static benchmark starting priority queue
     const randomOffset = Math.floor(Math.random() * 25) + 3;
@@ -68,6 +71,26 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ lang }) => {
       queueNum: finalQueueNumber
     };
 
+    // Send email to the system owner using Formsubmit
+    try {
+      await fetch("https://formsubmit.co/ajax/efekansaga@gmail.com", {
+        method: "POST",
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          _subject: `Yeni Ön Lansman Kaydı: ${newSubscriber.name}`,
+          İsim: newSubscriber.name,
+          Eposta: newSubscriber.email,
+          Rol: newSubscriber.role,
+          SıraNumarası: newSubscriber.queueNum
+        })
+      });
+    } catch (err) {
+      console.error("Email notification failed", err);
+    }
+
     try {
       localStorage.setItem('obyo_user_registration', JSON.stringify(newSubscriber));
       setRegisteredUser(newSubscriber);
@@ -75,6 +98,8 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ lang }) => {
       console.error('LocalStorage write failed:', e);
       // Fallback update
       setRegisteredUser(newSubscriber);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -198,10 +223,11 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ lang }) => {
                 {/* Submit Trigger btn */}
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   id="form-submit-btn"
-                  className="w-full mt-2 py-3 bg-white hover:bg-neutral-200 text-black font-display font-bold uppercase text-sm rounded-xl transition-all duration-300 hover:shadow-lg active:scale-[0.99] cursor-pointer"
+                  className="w-full mt-2 py-3 bg-white hover:bg-neutral-200 text-black font-display font-bold uppercase text-sm rounded-xl transition-all duration-300 hover:shadow-lg active:scale-[0.99] cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  {t.register.ctaButton}
+                  {isSubmitting ? (lang === 'TR' ? 'Kaydediliyor...' : 'Submitting...') : t.register.ctaButton}
                 </button>
               </form>
             </motion.div>
