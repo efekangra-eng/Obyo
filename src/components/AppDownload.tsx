@@ -7,7 +7,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { translations } from '../translations';
 import { Language } from '../types';
-import { Apple, Play } from 'lucide-react';
+import { FaApple, FaGooglePlay } from 'react-icons/fa';
 
 interface AppDownloadProps {
   lang: Language;
@@ -45,19 +45,23 @@ export const AppDownload: React.FC<AppDownloadProps> = ({ lang }) => {
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <button className="flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-4 bg-neutral-950/80 backdrop-blur-md border border-white/10 hover:border-white/30 hover:bg-neutral-900 transition-all duration-300 rounded-2xl text-white group cursor-not-allowed">
-            <Apple className="w-6 h-6 text-neutral-400 group-hover:text-white transition-colors" />
-            <div className="flex flex-col items-start leading-none gap-1">
+          <button className="flex items-center text-left w-full sm:w-[220px] px-6 py-3.5 bg-neutral-950/80 backdrop-blur-md border border-white/10 hover:border-white/30 hover:bg-neutral-900 transition-all duration-300 rounded-2xl text-white group cursor-not-allowed">
+            <div className="w-10 flex items-center justify-center shrink-0 mr-3">
+              <FaApple className="w-9 h-9 opacity-70 group-hover:opacity-100 transition-opacity" />
+            </div>
+            <div className="flex flex-col items-start leading-none gap-1 shrink-0 mt-0.5">
               <span className="text-[10px] font-mono text-neutral-500 uppercase tracking-wider">{lang === 'TR' ? 'Yakında' : 'Coming Soon'}</span>
-              <span className="font-display font-medium text-sm md:text-base">App Store</span>
+              <span className="font-display font-medium text-base">App Store</span>
             </div>
           </button>
           
-          <button className="flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-4 bg-neutral-950/80 backdrop-blur-md border border-white/10 hover:border-white/30 hover:bg-neutral-900 transition-all duration-300 rounded-2xl text-white group cursor-not-allowed">
-            <Play className="w-6 h-6 text-neutral-400 group-hover:text-white transition-colors" />
-            <div className="flex flex-col items-start leading-none gap-1">
+          <button className="flex items-center text-left w-full sm:w-[220px] px-6 py-3.5 bg-neutral-950/80 backdrop-blur-md border border-white/10 hover:border-white/30 hover:bg-neutral-900 transition-all duration-300 rounded-2xl text-white group cursor-not-allowed">
+            <div className="w-10 flex items-center justify-center shrink-0 mr-3">
+              <FaGooglePlay className="w-8 h-8 opacity-70 group-hover:opacity-100 transition-opacity" />
+            </div>
+            <div className="flex flex-col items-start leading-none gap-1 shrink-0 mt-0.5">
               <span className="text-[10px] font-mono text-neutral-500 uppercase tracking-wider">{lang === 'TR' ? 'Yakında' : 'Coming Soon'}</span>
-              <span className="font-display font-medium text-sm md:text-base">Google Play</span>
+              <span className="font-display font-medium text-base">Google Play</span>
             </div>
           </button>
         </div>
