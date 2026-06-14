@@ -9,7 +9,7 @@ import { Language } from './types';
 import { translations } from './translations';
 import { LanguageSelector } from './components/LanguageSelector';
 import { CountdownTimer } from './components/CountdownTimer';
-import { PlatformPreview } from './components/PlatformPreview';
+import { AppDownload } from './components/AppDownload';
 import { FeaturesGrid } from './components/FeaturesGrid';
 import { RegistrationForm } from './components/RegistrationForm';
 import { FAQSection } from './components/FAQSection';
@@ -26,6 +26,15 @@ import {
 
 export default function App() {
   const [lang, setLang] = useState<Language>('TR'); // TR by default as requested, with EN swap
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const t = translations[lang];
 
@@ -52,9 +61,9 @@ export default function App() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#FF6B0006_1px,transparent_1px),linear-gradient(to_bottom,#FF6B0006_1px,transparent_1px)] bg-[size:4rem_4rem] mask-[radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-80" />
       </div>
 
-      {/* 2. STICKY BLURRED CORE NAVIGATION HEADER */}
-      <header className="sticky top-0 z-50 w-full border-b border-neutral-900/60 bg-background-black/65 backdrop-blur-md select-none transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
+      {/* 2. FLOATING OVAL NAVIGATION BAR */}
+      <div className={`fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 w-[95%] max-w-5xl rounded-full border ${scrolled ? 'bg-neutral-900/60 backdrop-blur-xl border-white/10 shadow-2xl py-3 px-6' : 'bg-transparent border-transparent py-4 px-6'}`}>
+        <div className="flex items-center justify-between">
           
           {/* Brand Logo Anchor Left */}
           <div 
@@ -73,8 +82,8 @@ export default function App() {
               <span className="font-display font-medium text-lg leading-none tracking-tight text-white flex items-center gap-1">
                 Obyo<span className="text-primary font-black">Trade</span>
               </span>
-              <span className="text-[9px] font-mono font-bold tracking-widest text-[#FFAA00]/85 uppercase leading-none mt-1">
-                WEB TERMINAL
+              <span className="text-[9px] font-mono font-bold tracking-widest text-white uppercase leading-none mt-1">
+                OBYO GLOBAL
               </span>
             </div>
           </div>
@@ -102,10 +111,6 @@ export default function App() {
             >
               {t.faq.sectionTitle}
             </button>
-            <span className="w-1.5 h-1.5 rounded-full bg-primary/40" />
-            <span className="text-[10px] font-mono tracking-widest text-[#FF8A00] font-black">
-              {t.nav.comingSoon}
-            </span>
           </nav>
 
           {/* Secondary Controls - Right Side */}
@@ -117,7 +122,7 @@ export default function App() {
             <button
               id="header-cta-btn"
               onClick={() => scrollToSection('registration-form')}
-              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 bg-primary hover:bg-primary-hover text-black font-display font-bold uppercase text-xs rounded-full shadow-md shadow-primary/10 transition-colors active:scale-95 cursor-pointer"
+              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/10 text-white font-display font-medium text-xs rounded-full shadow-md transition-colors active:scale-95 cursor-pointer"
             >
               <span>{t.nav.register}</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -125,22 +130,11 @@ export default function App() {
           </div>
 
         </div>
-      </header>
+      </div>
 
       {/* 3. HERO & COUNTDOWN LANDING SPLASH */}
-      <main className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 pt-10 md:pt-16 pb-20 flex flex-col items-center">
+      <main className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 pt-32 md:pt-40 pb-20 flex flex-col items-center">
         
-        {/* Marketing Badges */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-neutral-950 border border-[#FF6B00]/25 rounded-full text-[10px] sm:text-xs font-mono font-black tracking-widest text-primary mb-6 shadow-sm shadow-primary/5 uppercase leading-none"
-        >
-          <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          <span>{t.hero.badge}</span>
-        </motion.div>
-
         {/* Mega Page Headline Title */}
         <div className="text-center max-w-4xl select-none">
           <motion.h1
@@ -176,14 +170,14 @@ export default function App() {
             <button
               id="hero-primary-cta"
               onClick={() => scrollToSection('registration-form')}
-              className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-[#FF6B00] to-[#FF3D00] hover:from-[#FFAA00] hover:to-[#FF6B00] text-black font-display font-black uppercase text-xs tracking-wider rounded-xl transition-all duration-300 shadow-lg shadow-[#FF6B00]/15 hover:shadow-[#FF6B00]/25 active:scale-98 cursor-pointer"
+              className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-neutral-200 text-black font-display font-medium text-sm rounded-xl transition-all duration-300 shadow-lg active:scale-98 cursor-pointer"
             >
               {t.hero.primaryCta}
             </button>
             <button
               id="hero-secondary-cta"
               onClick={() => scrollToSection('platform-preview')}
-              className="w-full sm:w-auto px-8 py-3.5 bg-neutral-950 border border-neutral-850 hover:border-neutral-700 text-white font-display font-bold uppercase text-xs tracking-wider rounded-xl transition-all duration-300 hover:bg-neutral-900 shadow-md active:scale-98 cursor-pointer"
+              className="w-full sm:w-auto px-8 py-4 bg-neutral-900/40 backdrop-blur-lg border border-white/10 hover:border-white/30 text-white font-display font-medium text-sm rounded-xl transition-all duration-300 hover:bg-neutral-800 shadow-md active:scale-98 cursor-pointer"
             >
               {t.hero.secondaryCta}
             </button>
@@ -209,9 +203,9 @@ export default function App() {
         {/* Separator Section Lines */}
         <div className="w-full max-w-2xl h-[1px] bg-gradient-to-r from-transparent via-neutral-900/60 to-transparent my-16" />
 
-        {/* 5. PLATFORM PREVIEW - MOBILE MOCKUP */}
+        {/* 5. PLATFORM PREVIEW - APP DOWNLOAD */}
         <div className="w-full">
-          <PlatformPreview lang={lang} />
+          <AppDownload lang={lang} />
         </div>
 
         {/* 6. BENTO ADVANTAGES PORTAL */}

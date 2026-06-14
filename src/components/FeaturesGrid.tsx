@@ -20,7 +20,7 @@ export const FeaturesGrid: React.FC<FeaturesGridProps> = ({ lang }) => {
     <section id="features-section" className="w-full relative py-16 px-4 select-none">
       
       {/* Background radial soft light blobs */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/2 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-white/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto text-center">
         
@@ -32,8 +32,8 @@ export const FeaturesGrid: React.FC<FeaturesGridProps> = ({ lang }) => {
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 border border-primary/20 text-[#FF8A00] rounded-full text-xs font-mono font-bold uppercase tracking-wider mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 border border-white/20 text-white rounded-full text-xs font-mono font-bold uppercase tracking-wider mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
             <span>Obyo Web Platform</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-display font-medium text-white tracking-tight leading-tight">
@@ -56,14 +56,14 @@ export const FeaturesGrid: React.FC<FeaturesGridProps> = ({ lang }) => {
             className="md:col-span-7 rounded-2xl border border-neutral-900 bg-neutral-950/60 p-6 md:p-8 relative overflow-hidden flex flex-col justify-between group hover:border-primary/30 transition-all duration-300"
           >
             {/* Top glowing bar */}
-            <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#FF6B00]/40 to-transparent" />
-            <div className="absolute top-4 right-4 text-[10px] font-mono text-primary bg-primary/10 border border-primary/20 px-2.5 py-0.5 rounded font-bold uppercase">
+            <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+            <div className="absolute top-4 right-4 text-[10px] font-mono text-white bg-white/10 border border-white/20 px-2.5 py-0.5 rounded font-bold uppercase">
               30ms latency
             </div>
 
             <div className="flex flex-col gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/30 flex items-center justify-center text-primary mb-2">
-                <Zap className="w-6 h-6 text-[#FF8A00]" />
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 flex items-center justify-center text-white mb-2">
+                <Zap className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl md:text-2xl font-display font-medium text-white tracking-tight">
                 {t.features.lightningTitle}
@@ -86,13 +86,13 @@ export const FeaturesGrid: React.FC<FeaturesGridProps> = ({ lang }) => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="md:col-span-12 lg:col-span-5 rounded-2xl border border-neutral-900 bg-neutral-950/60 p-6 md:p-8 relative overflow-hidden flex flex-col justify-between group hover:border-primary/30 transition-all duration-300"
+            className="md:col-span-12 lg:col-span-5 rounded-2xl border border-neutral-800 bg-neutral-900/40 backdrop-blur-md p-6 md:p-8 relative overflow-hidden flex flex-col justify-between group hover:border-white/30 transition-all duration-300"
           >
-            <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#FF6B00]/40 to-transparent" />
+            <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
             <div className="flex flex-col gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/30 flex items-center justify-center text-primary mb-2">
-                <Percent className="w-6 h-6 text-[#FFAA00]" />
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 flex items-center justify-center text-white mb-2">
+                <Percent className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl md:text-2xl font-display font-medium text-white tracking-tight">
                 {t.features.payoutTitle}
@@ -115,13 +115,13 @@ export const FeaturesGrid: React.FC<FeaturesGridProps> = ({ lang }) => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="md:col-span-5 rounded-2xl border border-neutral-900 bg-neutral-950/60 p-6 md:p-8 relative overflow-hidden flex flex-col justify-between group hover:border-primary/30 transition-all duration-300"
+            className="md:col-span-5 rounded-2xl border border-neutral-800 bg-neutral-900/40 backdrop-blur-md p-6 md:p-8 relative overflow-hidden flex flex-col justify-between group hover:border-white/30 transition-all duration-300"
           >
-            <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#FF6B00]/40 to-transparent" />
+            <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
             <div className="flex flex-col gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/30 flex items-center justify-center text-primary mb-2">
-                <ShieldAlert className="w-6 h-6 text-[#FF8A00]" />
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 flex items-center justify-center text-white mb-2">
+                <ShieldAlert className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl md:text-2xl font-display font-medium text-white tracking-tight">
                 {t.features.secureTitle}
@@ -145,11 +145,11 @@ export const FeaturesGrid: React.FC<FeaturesGridProps> = ({ lang }) => {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="md:col-span-7 rounded-2xl border border-neutral-900 bg-neutral-950/60 p-6 md:p-8 relative overflow-hidden flex flex-col justify-between group hover:border-primary/30 transition-all duration-300"
           >
-            <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#FF6B00]/40 to-transparent" />
+            <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
             <div className="flex flex-col gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/30 flex items-center justify-center text-primary mb-2">
-                <Smartphone className="w-6 h-6 text-[#FFAA00]" />
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 flex items-center justify-center text-white mb-2">
+                <Smartphone className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl md:text-2xl font-display font-medium text-white tracking-tight">
                 {t.features.responsiveTitle}

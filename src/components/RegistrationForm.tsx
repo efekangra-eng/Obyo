@@ -91,10 +91,10 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ lang }) => {
 
   return (
     <section id="registration-form" className="w-full relative py-12 px-4 select-none">
-      <div className="max-w-xl mx-auto rounded-2xl border border-neutral-900 bg-neutral-950 p-6 md:p-8 relative overflow-hidden glow-orange/5 hover:border-primary/20 transition-all duration-300">
+      <div className="max-w-xl mx-auto rounded-2xl border border-neutral-800 bg-neutral-900/40 backdrop-blur-xl p-6 md:p-8 relative overflow-hidden hover:border-white/20 transition-all duration-300">
         
         {/* Decorative glass edge glow */}
-        <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#FF6B00]/30 to-transparent" />
+        <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
 
         <AnimatePresence mode="wait">
           {!registeredUser ? (
@@ -105,8 +105,8 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ lang }) => {
               exit={{ opacity: 0, y: -10 }}
               className="text-center"
             >
-              <div className="mx-auto w-12 h-12 rounded-xl bg-orange-500/10 border border-orange-500/20 text-primary flex items-center justify-center mb-4">
-                <HeartHandshake className="w-6 h-6 text-[#FF8A00]" />
+              <div className="mx-auto w-12 h-12 rounded-xl bg-white/10 border border-white/20 text-white flex items-center justify-center mb-4">
+                <HeartHandshake className="w-6 h-6 text-white" />
               </div>
 
               <h2 className="text-2xl md:text-3xl font-display font-medium text-white tracking-tight leading-tight">
@@ -171,10 +171,10 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ lang }) => {
                         type="button"
                         id={`role-opt-${item.id}`}
                         onClick={() => setRole(item.id)}
-                        className={`py-2 px-3 text-xs bg-neutral-950 rounded-xl border font-medium text-center transition-all ${
+                        className={`py-2 px-3 text-xs bg-black/40 rounded-xl border font-medium text-center transition-all ${
                           role === item.id
-                            ? 'border-primary bg-primary/10 text-primary font-bold shadow-md shadow-primary/5'
-                            : 'border-neutral-850 text-neutral-400 hover:border-neutral-700 hover:text-white'
+                            ? 'border-white bg-white/10 text-white font-bold shadow-md shadow-white/5'
+                            : 'border-white/5 text-neutral-400 hover:border-white/20 hover:text-white'
                         }`}
                       >
                         {item.name}
@@ -199,7 +199,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ lang }) => {
                 <button
                   type="submit"
                   id="form-submit-btn"
-                  className="w-full mt-2 py-3 bg-gradient-to-r from-primary to-[#FF5C00] hover:from-primary-hover hover:to-[#E54B00] text-black font-display font-bold uppercase text-sm rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 active:scale-[0.99] cursor-pointer"
+                  className="w-full mt-2 py-3 bg-white hover:bg-neutral-200 text-black font-display font-bold uppercase text-sm rounded-xl transition-all duration-300 hover:shadow-lg active:scale-[0.99] cursor-pointer"
                 >
                   {t.register.ctaButton}
                 </button>
@@ -233,7 +233,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ lang }) => {
               {/* Secure Queue Number Display Card */}
               <div className="mt-6 border border-neutral-900 bg-neutral-950/80 py-5 px-4 rounded-xl relative overflow-hidden select-all">
                 <div className="absolute top-0 right-0 p-2 opacity-5 pointer-events-none">
-                  <Trophy className="w-16 h-16 text-primary" />
+                  <Trophy className="w-16 h-16 text-white" />
                 </div>
                 <span className="text-[9px] font-mono tracking-widest uppercase text-neutral-500 block">
                   {t.register.queueNumber}
@@ -252,7 +252,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ lang }) => {
                   <div className="text-neutral-500 uppercase">
                     ALLOCATED BENEFIT:
                   </div>
-                  <div className="text-primary font-bold text-right">
+                  <div className="text-white font-bold text-right">
                     100% DOUBLE MATCH
                   </div>
                 </div>
@@ -262,7 +262,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ lang }) => {
               <button
                 id="reset-queue-btn"
                 onClick={handleUnsubscribe}
-                className="mt-6 text-[10px] font-mono text-neutral-500 hover:text-primary transition-colors uppercase underline cursor-pointer"
+                className="mt-6 text-[10px] font-mono text-neutral-500 hover:text-white transition-colors uppercase underline cursor-pointer"
               >
                 {lang === 'TR' ? 'Bilgileri Temizle / Yeni Kayıt' : 'Clear Info / New Sign-up'}
               </button>
