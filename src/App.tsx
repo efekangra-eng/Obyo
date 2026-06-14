@@ -21,12 +21,16 @@ import {
   TrendingUp, 
   Wallet, 
   Coins, 
-  Network
+  Network,
+  LayoutDashboard,
+  Sparkles,
+  UserPlus
 } from 'lucide-react';
 
 export default function App() {
   const [lang, setLang] = useState<Language>('TR'); // TR by default as requested, with EN swap
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,6 +38,24 @@ export default function App() {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    }, { rootMargin: '-30% 0px -70% 0px' });
+
+    const sections = ['platform-preview', 'features-section', 'registration-form'];
+    sections.forEach(sec => {
+      const el = document.getElementById(sec);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   const t = translations[lang];
@@ -62,22 +84,27 @@ export default function App() {
       </div>
 
       {/* 2. FLOATING OVAL NAVIGATION BAR */}
-      <div className={`fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 w-[95%] max-w-5xl rounded-full border ${scrolled ? 'bg-neutral-900/60 backdrop-blur-xl border-white/10 shadow-2xl py-3 px-6' : 'bg-transparent border-transparent py-4 px-6'}`}>
+      <div className={`fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 w-[95%] max-w-5xl rounded-full border ${scrolled ? 'bg-neutral-900/60 backdrop-blur-xl border-white/10 shadow-2xl py-3 px-6' : 'bg-neutral-900/10 backdrop-blur-sm border-white/5 py-4 px-6'}`}>
         <div className="flex items-center justify-between">
           
           {/* Brand Logo Anchor Left */}
           <div 
-            className="flex items-center gap-2.5 cursor-pointer"
+            className="flex items-center gap-3 cursor-pointer"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
-            <img 
-              src="/logo.png" 
-              alt="Obyo Logo" 
-              className="w-8 h-8 object-contain"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23FF6B00'/%3E%3Ctext x='50' y='70' font-size='60' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'%3EO%3C/text%3E%3C/svg%3E";
-              }}
-            />
+            <div className="flex items-center justify-center">
+              <svg 
+                width="28" 
+                height="28" 
+                viewBox="0 0 100 100" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg"
+                className="flex-shrink-0 drop-shadow-md"
+              >
+                <path d="M50 0 L100 50 L75 50 L50 25 L25 50 L0 50 Z" fill="#FF6B00" />
+                <path d="M0 50 L25 50 L50 75 L75 50 L100 50 L50 100 Z" fill="#FFAA00" />
+              </svg>
+            </div>
             <div className="flex flex-col text-left">
               <span className="font-display font-medium text-lg leading-none tracking-tight text-white flex items-center gap-1">
                 Obyo<span className="text-primary font-black">Trade</span>
@@ -130,6 +157,31 @@ export default function App() {
           </div>
 
         </div>
+      </div>
+
+      {/* BOTTOM FLOATING ACTION BAR */}
+      <div className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 rounded-full border ${scrolled ? 'bg-neutral-900/80 backdrop-blur-xl border-white/10 shadow-2xl' : 'bg-neutral-900/40 backdrop-blur-md border-white/5'} p-1.5 flex items-center gap-2 shadow-lg`}>
+        <button 
+          onClick={() => scrollToSection('platform-preview')} 
+          className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSection === 'platform-preview' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
+          title={lang === 'TR' ? 'Önizleme' : 'Preview'}
+        >
+          <LayoutDashboard className="w-5 h-5" />
+        </button>
+        <button 
+          onClick={() => scrollToSection('features-section')} 
+          className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSection === 'features-section' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
+          title={lang === 'TR' ? 'Yetenekler' : 'Features'}
+        >
+          <Sparkles className="w-5 h-5" />
+        </button>
+        <button
+          onClick={() => scrollToSection('registration-form')}
+          className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSection === 'registration-form' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
+          title={t.nav.register}
+        >
+          <UserPlus className="w-5 h-5" />
+        </button>
       </div>
 
       {/* 3. HERO & COUNTDOWN LANDING SPLASH */}
@@ -204,17 +256,17 @@ export default function App() {
         <div className="w-full max-w-2xl h-[1px] bg-gradient-to-r from-transparent via-neutral-900/60 to-transparent my-16" />
 
         {/* 5. PLATFORM PREVIEW - APP DOWNLOAD */}
-        <div className="w-full">
+        <div id="platform-preview" className="w-full">
           <AppDownload lang={lang} />
         </div>
 
         {/* 6. BENTO ADVANTAGES PORTAL */}
-        <div className="w-full mt-8">
+        <div id="features-section" className="w-full mt-8">
           <FeaturesGrid lang={lang} />
         </div>
 
         {/* 7. REVOLUTION WAITING CAPTURES SHEET */}
-        <div className="w-full">
+        <div id="registration-form" className="w-full">
           <RegistrationForm lang={lang} />
         </div>
 
@@ -222,7 +274,7 @@ export default function App() {
         <div className="w-full max-w-2xl h-[1px] bg-gradient-to-r from-transparent via-neutral-900/60 to-transparent my-12" />
 
         {/* 8. INTERACTIVE FAQ EXPANSIONS */}
-        <div className="w-full">
+        <div id="faq-section" className="w-full">
           <FAQSection lang={lang} />
         </div>
 
