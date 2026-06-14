@@ -4,7 +4,7 @@
   "description": "Profesyonel ikili opsiyon ticaret platformu.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0a0a0c",
+  "background_color": "#000000",
   "theme_color": "#FF6B00",
   "icons": [
     {

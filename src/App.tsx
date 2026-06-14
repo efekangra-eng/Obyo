@@ -13,7 +13,7 @@ import { AppDownload } from './components/AppDownload';
 import { FeaturesGrid } from './components/FeaturesGrid';
 import { RegistrationForm } from './components/RegistrationForm';
 import { FAQSection } from './components/FAQSection';
-import TradeGuide from './components/TradeGuide';
+import AiAnalyzer from './components/AiAnalyzer';
 
 import { 
   ArrowRight, 
@@ -28,7 +28,7 @@ import {
   UserPlus,
   Sun,
   Moon,
-  BookOpen
+  Brain
 } from 'lucide-react';
 
 export default function App() {
@@ -46,13 +46,23 @@ export default function App() {
   });
 
   const [isPwa, setIsPwa] = useState(false);
-  const [currentView, setCurrentView] = useState<'home' | 'guide'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'ai-analysis'>('home');
 
   useEffect(() => {
     const handler = (e: MediaQueryListEvent) => setIsPwa(e.matches);
     const mediaQuery = window.matchMedia('(display-mode: standalone)');
     setIsPwa(mediaQuery.matches);
     mediaQuery.addEventListener('change', handler);
+
+    // Hide splash screen when React mounts
+    const splashScreen = document.getElementById('splash-screen');
+    if (splashScreen) {
+      setTimeout(() => {
+        splashScreen.style.opacity = '0';
+        setTimeout(() => splashScreen.remove(), 600);
+      }, 500); // 500ms delay to ensure everything is settled
+    }
+
     return () => mediaQuery.removeEventListener('change', handler);
   }, []);
 
@@ -230,11 +240,11 @@ export default function App() {
         
         {isPwa && (
           <button
-            onClick={() => setCurrentView('guide')}
-            className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${currentView === 'guide' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
-            title={lang === 'TR' ? 'Rehber' : 'Guide'}
+            onClick={() => setCurrentView('ai-analysis')}
+            className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${currentView === 'ai-analysis' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
+            title={lang === 'TR' ? 'Yapay Zeka' : 'AI Analysis'}
           >
-            <BookOpen className="w-5 h-5" />
+            <Brain className="w-5 h-5" />
           </button>
         )}
 
@@ -405,7 +415,7 @@ export default function App() {
       </footer>
       </>
       ) : (
-        <TradeGuide lang={lang} onAddClose={() => setCurrentView('home')} />
+        <AiAnalyzer lang={lang} onAddClose={() => setCurrentView('home')} />
       )}
 
     </div>
