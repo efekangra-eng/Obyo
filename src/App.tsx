@@ -13,7 +13,6 @@ import { AppDownload } from './components/AppDownload';
 import { FeaturesGrid } from './components/FeaturesGrid';
 import { RegistrationForm } from './components/RegistrationForm';
 import { FAQSection } from './components/FAQSection';
-import AiAnalyzer from './components/AiAnalyzer';
 
 import { 
   ArrowRight, 
@@ -27,8 +26,7 @@ import {
   Sparkles,
   UserPlus,
   Sun,
-  Moon,
-  Brain
+  Moon
 } from 'lucide-react';
 
 export default function App() {
@@ -46,7 +44,6 @@ export default function App() {
   });
 
   const [isPwa, setIsPwa] = useState(false);
-  const [currentView, setCurrentView] = useState<'home' | 'ai-analysis'>('home');
 
   useEffect(() => {
     const handler = (e: MediaQueryListEvent) => setIsPwa(e.matches);
@@ -115,12 +112,7 @@ export default function App() {
   };
 
   const handleNavClick = (id: string) => {
-    if (currentView !== 'home') {
-      setCurrentView('home');
-      setTimeout(() => scrollToSection(id), 100);
-    } else {
-      scrollToSection(id);
-    }
+    scrollToSection(id);
   };
 
   return (
@@ -215,56 +207,47 @@ export default function App() {
       </div>
 
       {/* BOTTOM FLOATING ACTION BAR */}
-      <div className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-[50] transition-all duration-500 rounded-full border ${scrolled ? 'bg-neutral-900/80 backdrop-blur-xl border-white/10 shadow-2xl' : 'bg-neutral-900/40 backdrop-blur-md border-white/5'} p-1.5 flex items-center gap-2 shadow-lg`}>
-        <button 
-          onClick={() => handleNavClick('platform-preview')} 
-          className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSection === 'platform-preview' && currentView === 'home' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
-          title={lang === 'TR' ? 'Önizleme' : 'Preview'}
-        >
-          <LayoutDashboard className="w-5 h-5" />
-        </button>
-        <button 
-          onClick={() => handleNavClick('features-section')} 
-          className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSection === 'features-section' && currentView === 'home' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
-          title={lang === 'TR' ? 'Yetenekler' : 'Features'}
-        >
-          <Sparkles className="w-5 h-5" />
-        </button>
-        <button
-          onClick={() => handleNavClick('registration-form')}
-          className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSection === 'registration-form' && currentView === 'home' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
-          title={t.nav.register}
-        >
-          <UserPlus className="w-5 h-5" />
-        </button>
-        
-        {isPwa && (
-          <button
-            onClick={() => setCurrentView('ai-analysis')}
-            className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${currentView === 'ai-analysis' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
-            title={lang === 'TR' ? 'Yapay Zeka' : 'AI Analysis'}
+      {!isPwa && (
+        <div className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-[50] transition-all duration-500 rounded-full border ${scrolled ? 'bg-neutral-900/80 backdrop-blur-xl border-white/10 shadow-2xl' : 'bg-neutral-900/40 backdrop-blur-md border-white/5'} p-1.5 flex items-center gap-2 shadow-lg`}>
+          <button 
+            onClick={() => handleNavClick('platform-preview')} 
+            className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSection === 'platform-preview' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
+            title={lang === 'TR' ? 'Önizleme' : 'Preview'}
           >
-            <Brain className="w-5 h-5" />
+            <LayoutDashboard className="w-5 h-5" />
           </button>
-        )}
+          <button 
+            onClick={() => handleNavClick('features-section')} 
+            className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSection === 'features-section' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
+            title={lang === 'TR' ? 'Yetenekler' : 'Features'}
+          >
+            <Sparkles className="w-5 h-5" />
+          </button>
+          <button
+            onClick={() => handleNavClick('registration-form')}
+            className={`p-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeSection === 'registration-form' ? 'bg-white text-black shadow-md relative scale-110' : 'text-neutral-400 hover:text-white hover:bg-white/10'}`}
+            title={t.nav.register}
+          >
+            <UserPlus className="w-5 h-5" />
+          </button>
 
-        <div className="w-[1px] h-6 bg-white/10 mx-1" />
-        <button
-          onClick={() => setIsLight(!isLight)}
-          className="p-2.5 rounded-full transition-all duration-300 cursor-pointer text-neutral-400 hover:text-white hover:bg-white/10"
-          title={lang === 'TR' ? 'Tema Değiştir' : 'Toggle Theme'}
-        >
-          {isLight ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
-        </button>
-      </div>
+          <div className="w-[1px] h-6 bg-white/10 mx-1" />
+          <button
+            onClick={() => setIsLight(!isLight)}
+            className="p-2.5 rounded-full transition-all duration-300 cursor-pointer text-neutral-400 hover:text-white hover:bg-white/10"
+            title={lang === 'TR' ? 'Tema Değiştir' : 'Toggle Theme'}
+          >
+            {isLight ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+          </button>
+        </div>
+      )}
 
       {/* 3. HERO & COUNTDOWN LANDING SPLASH */}
-      {currentView === 'home' ? (
-        <>
-          <main className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 pt-32 md:pt-40 pb-20 flex flex-col items-center">
-        
-        {/* Mega Page Headline Title */}
-        <div className="text-center max-w-4xl select-none">
+      {!isPwa ? (
+        <main className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 pt-32 md:pt-40 pb-20 flex flex-col items-center">
+          
+          {/* Mega Page Headline Title */}
+          <div className="text-center max-w-4xl select-none">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -355,10 +338,16 @@ export default function App() {
         </div>
 
       </main>
+      ) : (
+        <main className="relative z-10 max-w-2xl mx-auto px-4 md:px-6 pt-40 pb-20 flex flex-col items-center min-h-[90vh] justify-center">
+          <RegistrationForm lang={lang} isPwa={isPwa} />
+        </main>
+      )}
 
       {/* 9. DETAILED TRADING DISCLOSURES FOOTER */}
-      <footer id="footer-section" className="relative z-10 border-t border-neutral-900 bg-neutral-999 select-none py-12 px-4">
-        <div className="max-w-6xl mx-auto flex flex-col items-center">
+      {!isPwa && (
+        <footer id="footer-section" className="relative z-10 border-t border-neutral-900 bg-neutral-999 select-none py-12 px-4">
+          <div className="max-w-6xl mx-auto flex flex-col items-center">
           
           {/* Secure transaction network badges */}
           <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mb-8 text-[11px] font-mono text-neutral-500 select-none">
@@ -413,9 +402,6 @@ export default function App() {
 
         </div>
       </footer>
-      </>
-      ) : (
-        <AiAnalyzer lang={lang} onAddClose={() => setCurrentView('home')} />
       )}
 
     </div>

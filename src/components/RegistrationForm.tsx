@@ -11,9 +11,10 @@ import { HeartHandshake, CheckCircle2, UserCheck, Mail, ClipboardCheck, Trophy }
 
 interface RegistrationFormProps {
   lang: Language;
+  isPwa?: boolean;
 }
 
-export const RegistrationForm: React.FC<RegistrationFormProps> = ({ lang }) => {
+export const RegistrationForm: React.FC<RegistrationFormProps> = ({ lang, isPwa }) => {
   const t = translations[lang];
 
   // Form input states
@@ -251,9 +252,14 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ lang }) => {
                 {t.register.successMessage}
               </h2>
               <p className="mt-2 text-xs text-neutral-400 font-sans px-4">
-                {lang === 'TR' 
-                  ? `${registeredUser.name}, ön başvurunuz başarıyla 1. dereceden sisteme işlendi. Lansman öncesi e-posta doğrulaması için kutunuzu kontrol edin.`
-                  : `Greetings ${registeredUser.name}, your initial prioritized allocation has been fully logged. Check your inbox for upcoming launch requirements.`}
+                {isPwa 
+                  ? (lang === 'TR' 
+                    ? 'Lansman süresi dolduğunda kaydınız tamamlanacak.' 
+                    : 'Your registration will be completed when the launch period expires.')
+                  : (lang === 'TR' 
+                    ? `${registeredUser.name}, ön başvurunuz başarıyla 1. dereceden sisteme işlendi. Lansman öncesi e-posta doğrulaması için kutunuzu kontrol edin.`
+                    : `Greetings ${registeredUser.name}, your initial prioritized allocation has been fully logged. Check your inbox for upcoming launch requirements.`)
+                }
               </p>
 
               {/* Secure Queue Number Display Card */}
